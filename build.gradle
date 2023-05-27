@@ -1,0 +1,53 @@
+buildscript {
+    repositories {
+        maven {
+            url = uri("https://plugins.gradle.org/m2/")
+        }
+    }
+    dependencies {
+        classpath("net.serenity-bdd:serenity-gradle-plugin:2.5.7")
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+apply plugin: 'net.serenity-bdd.aggregator'
+
+
+defaultTasks 'test', 'aggregate'
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    commonVersion = '2.5.7'
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.8.2")
+//[serenitybdd] Serenity BDD dependencies.
+    implementation "net.serenity-bdd:serenity-cucumber6:${commonVersion}"
+    implementation "net.serenity-bdd:serenity-core:${commonVersion}"
+    implementation "net.serenity-bdd:serenity-junit:${commonVersion}"
+    implementation 'io.appium:java-client:7.0.0'
+    implementation('org.assertj:assertj-core:1.7.0')
+    implementation('org.slf4j:slf4j-simple:1.7.21')
+
+}
+
+test {
+    useJUnitPlatform()
+    testLogging.showStandardStreams = true
+    systemProperties System.getProperties()
+}
+
+gradle.startParameter.continueOnFailure = true
+
+test.finalizedBy(aggregate)
