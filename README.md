@@ -1,4 +1,4 @@
-# Getting started ebay Cucumber BDD Serenity Project
+# Getting started google Cucumber BDD Serenity Project
 
 ### The project directory structure
 The project has build scripts for Gradle, and follows the standard directory structure used in most Serenity projects:
